@@ -10,8 +10,11 @@ import {
 	ProfileScreen,
 } from './src/screens';
 import { firebase } from './src/firebase/config';
-import { decode, encode } from 'base-64';
 import store from './src/redux/store';
+import { Provider } from 'react-redux';
+import { decode, encode } from 'base-64';
+import { useSelector, useDispatch } from 'react-redux';
+import { userCurrentState } from './src/redux/actions';
 
 if (!global.btoa) {
 	global.btoa = encode;
@@ -20,42 +23,46 @@ if (!global.atob) {
 	global.atob = decode;
 }
 
-const Stack = createStackNavigator();
-
-export default function App() {
-	const [loading, setLoading] = useState(true);
-	const [user, setUser] = useState(null);
+const App = () => {
+	// const [loading, setLoading] = useState(true);
+	// const [user, setUser] = useState(null);
+	const Stack = createStackNavigator();
+	const dispatch = useDispatch();
+	const users = useSelector((state) => state);
+	console.log(users);
 
 	useEffect(() => {
-		const usersRef = firebase.firestore().collection('users');
-		firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
-				usersRef
-					.doc(user.uid)
-					.get()
-					.then((document) => {
-						const userData = document.data();
-						setLoading(false);
-						setUser(userData);
-					})
-					.catch((error) => {
-						setLoading(false);
-					});
-			} else {
-				setLoading(false);
-			}
-		});
+		// const usersRef = firebase.firestore().collection('users');
+		// firebase.auth().onAuthStateChanged((user) => {
+		// 	if (user) {
+		// 		usersRef
+		// 			.doc(user.uid)
+		// 			.get()
+		// 			.then((document) => {
+		// 				const userData = document.data();
+		// 				setLoading(false);
+		// 				setUser(userData);
+		// 			})
+		// 			.catch((error) => {
+		// 				setLoading(false);
+		// 			});
+		// 	} else {
+		// 		setLoading(false);
+		// 	}
+		// });
+
+		dispatch(userCurrentState);
 	}, []);
 
-	if (loading) {
-		return <></>;
-	}
+	// if (loading) {
+	// 	return <></>;
+	// }
 
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
 				{user ? (
-					<Provider store={store}>
+					<>
 						<Stack.Screen
 							name="Main"
 							component={MainScreen}
@@ -63,7 +70,7 @@ export default function App() {
 						/>
 						<Stack.Screen name="AddJob" component={AddJobScreen} />
 						<Stack.Screen name="Profile" component={ProfileScreen} />
-					</Provider>
+					</>
 				) : (
 					<>
 						<Stack.Screen name="Login" component={LoginScreen} />
@@ -73,4 +80,6 @@ export default function App() {
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
-}
+};
+
+export default App;
