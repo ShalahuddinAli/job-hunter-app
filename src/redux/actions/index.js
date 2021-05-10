@@ -1,9 +1,11 @@
 import { firebase } from '../../firebase/config';
 import {
+	SIGN_IN,
 	SIGN_UP,
 	USER_CURRENT_STATE,
 	USER_NO_STATE,
 	USER_STATE_ERROR,
+	GET_JOBS,
 } from '../constants';
 
 export const userCurrentState = () => {
@@ -48,7 +50,6 @@ export const signUp = (email, password, username, navigation) => {
 					.doc(uid)
 					.set(data)
 					.then(() => {
-						navigation.navigate('Main');
 						dispatch({
 							type: SIGN_UP,
 							payload: { user: data, loading: false },
@@ -63,3 +64,67 @@ export const signUp = (email, password, username, navigation) => {
 			});
 	};
 };
+
+export const signIn = (email, password, navigation) => {
+	return (dispatch) => {
+		firebase
+			.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then((res) => {
+				const uid = res.user.uid;
+				const usersRef = firebase.firestore().collection('users');
+				usersRef
+					.doc(uid)
+					.get()
+					.then((doc) => {
+						if (!doc.exists) {
+							alert('User does not exist anymore.');
+							return;
+						}
+						const user = doc.data();
+						dispatch({
+							type: SIGN_IN,
+							payload: { user: user, loading: false },
+						});
+					})
+					.catch((error) => {
+						alert(error);
+					});
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
+};
+
+// export const getJobs = () => {
+// 	return (dispatch) => {
+// 		firebase
+// 			.auth()
+// 			.signInWithEmailAndPassword(email, password)
+// 			.then((res) => {
+// 				const uid = res.user.uid;
+// 				const usersRef = firebase.firestore().collection('users');
+// 				usersRef
+// 					.doc(uid)
+// 					.get()
+// 					.then((doc) => {
+// 						if (!doc.exists) {
+// 							alert('User does not exist anymore.');
+// 							return;
+// 						}
+// 						const user = doc.data();
+// 						dispatch({
+// 							type: GET_JOBS,
+// 							payload: { user: user, loading: false },
+// 						});
+// 					})
+// 					.catch((error) => {
+// 						alert(error);
+// 					});
+// 			})
+// 			.catch((error) => {
+// 				alert(error);
+// 			});
+// 	};
+// };
