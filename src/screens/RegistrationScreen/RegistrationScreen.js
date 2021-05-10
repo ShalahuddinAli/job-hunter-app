@@ -20,30 +20,31 @@ const RegistrationScreen = ({ navigation }) => {
 			alert("Passwords don't match.");
 			return;
 		}
-		firebase
-			.auth()
-			.createUserWithEmailAndPassword(email, password)
-			.then((response) => {
-				const uid = response.user.uid;
-				const data = {
-					id: uid,
-					email,
-					userName,
-				};
-				const usersRef = firebase.firestore().collection('users');
-				usersRef
-					.doc(uid)
-					.set(data)
-					.then(() => {
-						navigation.navigate('Home', { user: data });
-					})
-					.catch((error) => {
-						alert(error);
-					});
-			})
-			.catch((error) => {
-				alert(error);
-			});
+		dispatch(email, password);
+		// firebase
+		// 	.auth()
+		// 	.createUserWithEmailAndPassword(email, password)
+		// 	.then((response) => {
+		// 		const uid = response.user.uid;
+		// 		const data = {
+		// 			id: uid,
+		// 			email,
+		// 			userName,
+		// 		};
+		// 		const usersRef = firebase.firestore().collection('users');
+		// 		usersRef
+		// 			.doc(uid)
+		// 			.set(data)
+		// 			.then(() => {
+		// 				navigation.navigate('Home', { user: data });
+		// 			})
+		// 			.catch((error) => {
+		// 				alert(error);
+		// 			});
+		// 	})
+		// 	.catch((error) => {
+		// 		alert(error);
+		// 	});
 	};
 	return (
 		<View style={styles.container}>

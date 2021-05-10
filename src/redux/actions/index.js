@@ -29,3 +29,36 @@ export const userCurrentState = () => {
 		});
 	};
 };
+
+export const signUp = () => {
+	return (dispatch) => {
+		firebase
+			.auth()
+			.createUserWithEmailAndPassword(email, password)
+			.then((res) => {
+				const uid = res.user.uid;
+				const data = {
+					id: uid,
+					email,
+					userName,
+				};
+				const usersRef = firebase.firestore().collection('users');
+				usersRef
+					.doc(uid)
+					.set(data)
+					.then(() => {
+						navigation.navigate('Home');
+						dispatch({
+							type: USER_CURRENT_STATE,
+							payload: { user: userData, loading: false },
+						});
+					})
+					.catch((error) => {
+						alert(error);
+					});
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
+};

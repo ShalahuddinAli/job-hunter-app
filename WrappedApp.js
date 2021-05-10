@@ -25,7 +25,7 @@ const WrappedApp = () => {
 	const userStatus = useSelector((state) => state.users);
 
 	const { loading, user } = userStatus;
-
+	console.log(userStatus);
 	useEffect(() => {
 		dispatch(userCurrentState());
 	}, [dispatch]);
