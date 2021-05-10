@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { firebase } from '../../firebase/config';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './styles';
 
 const RegistrationScreen = ({ navigation }) => {
-	const [fullName, setFullName] = useState('');
+	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -14,7 +15,7 @@ const RegistrationScreen = ({ navigation }) => {
 		navigation.navigate('Login');
 	};
 
-	const onRegisterPress = () => {
+	const handleSubmit = () => {
 		if (password !== confirmPassword) {
 			alert("Passwords don't match.");
 			return;
@@ -27,7 +28,7 @@ const RegistrationScreen = ({ navigation }) => {
 				const data = {
 					id: uid,
 					email,
-					fullName,
+					userName,
 				};
 				const usersRef = firebase.firestore().collection('users');
 				usersRef
@@ -55,10 +56,10 @@ const RegistrationScreen = ({ navigation }) => {
 				/>
 				<TextInput
 					style={styles.input}
-					placeholder="Full Name"
+					placeholder="Username"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setFullName(text)}
-					value={fullName}
+					onChangeText={(text) => setUserName(text)}
+					value={userName}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
@@ -93,12 +94,12 @@ const RegistrationScreen = ({ navigation }) => {
 				/>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => onRegisterPress()}>
+					onPress={(e) => handleSubmit(e)}>
 					<Text style={styles.buttonTitle}>Create account</Text>
 				</TouchableOpacity>
 				<View style={styles.footerView}>
 					<Text style={styles.footerText}>
-						Already got an account?{' '}
+						Already got an account?
 						<Text onPress={onFooterLinkPress} style={styles.footerLink}>
 							Log in
 						</Text>
