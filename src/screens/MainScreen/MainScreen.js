@@ -1,8 +1,9 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import firebase from 'firebase';
-import { ProfileScreen, AddJobScreen, JobsScreen } from '..';
+import JobsScreen from '../JobsScreen/JobsScreen';
+import AddJobScreen from '../AddJobScreen/AddJobScreen';
+import ProfileScreen from '../ProfileScreen/ProfileScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 

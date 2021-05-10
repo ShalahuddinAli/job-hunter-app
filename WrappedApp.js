@@ -2,16 +2,14 @@ import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-	LoginScreen,
-	MainScreen,
-	RegistrationScreen,
-	AddJobScreen,
-	ProfileScreen,
-} from './src/screens';
 import { decode, encode } from 'base-64';
 import { useSelector, useDispatch } from 'react-redux';
 import { userCurrentState } from './src/redux/actions';
+import MainScreen from './src/screens/MainScreen/MainScreen';
+import AddJobScreen from './src/screens/AddJobScreen/AddJobScreen';
+import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen';
+import RegistrationScreen from './src/screens/RegistrationScreen/RegistrationScreen';
+import LoginScreen from './src/screens/LoginScreen/LoginScreen';
 
 if (!global.btoa) {
 	global.btoa = encode;

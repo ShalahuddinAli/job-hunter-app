@@ -1,4 +1,5 @@
 import {
+	SIGN_UP,
 	USER_CURRENT_STATE,
 	USER_NO_STATE,
 	USER_STATE_ERROR,
@@ -14,6 +15,7 @@ const user = (state = initialState, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
+		case SIGN_UP:
 		case USER_CURRENT_STATE:
 			return {
 				...state,

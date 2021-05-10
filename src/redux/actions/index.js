@@ -1,5 +1,6 @@
 import { firebase } from '../../firebase/config';
 import {
+	SIGN_UP,
 	USER_CURRENT_STATE,
 	USER_NO_STATE,
 	USER_STATE_ERROR,
@@ -30,7 +31,7 @@ export const userCurrentState = () => {
 	};
 };
 
-export const signUp = () => {
+export const signUp = (email, password, username, navigation) => {
 	return (dispatch) => {
 		firebase
 			.auth()
@@ -40,17 +41,17 @@ export const signUp = () => {
 				const data = {
 					id: uid,
 					email,
-					userName,
+					username,
 				};
 				const usersRef = firebase.firestore().collection('users');
 				usersRef
 					.doc(uid)
 					.set(data)
 					.then(() => {
-						navigation.navigate('Home');
+						navigation.navigate('Main');
 						dispatch({
-							type: USER_CURRENT_STATE,
-							payload: { user: userData, loading: false },
+							type: SIGN_UP,
+							payload: { user: data, loading: false },
 						});
 					})
 					.catch((error) => {

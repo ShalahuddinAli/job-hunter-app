@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { firebase } from '../../firebase/config';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './styles';
+import { signUp } from '../../redux/actions';
 
 const RegistrationScreen = ({ navigation }) => {
-	const [userName, setUserName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [newUserInfo, setNewUserInfo] = useState({
+		username: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+	});
+	const { username, email, password, confirmPassword } = newUserInfo;
+	const dispatch = useDispatch();
 
 	const onFooterLinkPress = () => {
 		navigation.navigate('Login');
@@ -20,31 +24,7 @@ const RegistrationScreen = ({ navigation }) => {
 			alert("Passwords don't match.");
 			return;
 		}
-		dispatch(email, password);
-		// firebase
-		// 	.auth()
-		// 	.createUserWithEmailAndPassword(email, password)
-		// 	.then((response) => {
-		// 		const uid = response.user.uid;
-		// 		const data = {
-		// 			id: uid,
-		// 			email,
-		// 			userName,
-		// 		};
-		// 		const usersRef = firebase.firestore().collection('users');
-		// 		usersRef
-		// 			.doc(uid)
-		// 			.set(data)
-		// 			.then(() => {
-		// 				navigation.navigate('Home', { user: data });
-		// 			})
-		// 			.catch((error) => {
-		// 				alert(error);
-		// 			});
-		// 	})
-		// 	.catch((error) => {
-		// 		alert(error);
-		// 	});
+		dispatch(signUp(email, password, username, navigation));
 	};
 	return (
 		<View style={styles.container}>
@@ -59,8 +39,10 @@ const RegistrationScreen = ({ navigation }) => {
 					style={styles.input}
 					placeholder="Username"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setUserName(text)}
-					value={userName}
+					onChangeText={(text) =>
+						setNewUserInfo({ ...newUserInfo, username: text })
+					}
+					value={username}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
@@ -68,7 +50,9 @@ const RegistrationScreen = ({ navigation }) => {
 					style={styles.input}
 					placeholder="E-mail"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => setEmail(text)}
+					onChangeText={(text) =>
+						setNewUserInfo({ ...newUserInfo, email: text })
+					}
 					value={email}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
@@ -78,7 +62,9 @@ const RegistrationScreen = ({ navigation }) => {
 					placeholderTextColor="#aaaaaa"
 					secureTextEntry
 					placeholder="Password"
-					onChangeText={(text) => setPassword(text)}
+					onChangeText={(text) =>
+						setNewUserInfo({ ...newUserInfo, password: text })
+					}
 					value={password}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
@@ -88,7 +74,9 @@ const RegistrationScreen = ({ navigation }) => {
 					placeholderTextColor="#aaaaaa"
 					secureTextEntry
 					placeholder="Confirm Password"
-					onChangeText={(text) => setConfirmPassword(text)}
+					onChangeText={(text) =>
+						setNewUserInfo({ ...newUserInfo, confirmPassword: text })
+					}
 					value={confirmPassword}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
