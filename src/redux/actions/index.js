@@ -6,6 +6,7 @@ import {
 	USER_NO_STATE,
 	USER_STATE_ERROR,
 	GET_JOBS,
+	GET_USER_JOBS,
 } from '../constants';
 
 export const userCurrentState = () => {
@@ -22,6 +23,7 @@ export const userCurrentState = () => {
 							type: USER_CURRENT_STATE,
 							payload: { user: userData, loading: false },
 						});
+						dispatch(userJobPosts());
 					})
 					.catch((error) => {
 						dispatch({ type: USER_STATE_ERROR, payload: false });
@@ -97,6 +99,22 @@ export const signIn = (email, password, navigation) => {
 	};
 };
 
+export const userJobPosts = () => {
+	return (dispatch) => {
+		firebase
+			.firestore()
+			.collection('posts')
+			.doc(firebase.auth().currentUser.uid)
+			.collection('userPosts')
+			.get()
+			.then((querySnapshot) => {
+				const posts = querySnapshot.docs.map((doc) => doc.data());
+				console.log(posts, 'dddd');
+				dispatch({ type: GET_USER_JOBS, payload: posts });
+			});
+	};
+};
+
 export const getJobs = () => {
 	return (dispatch) => {
 		firebase
@@ -132,18 +150,26 @@ export const getJobs = () => {
 
 export const addJob = (jobTitle, descriptions, pay, navigation) => {
 	return (dispatch) => {
-		firebase
+		const dbCollection = firebase
 			.firestore()
 			.collection('posts')
 			.doc(firebase.auth().currentUser.uid)
-			.collection('userPosts')
-			.add({
-				jobTitle,
-				descriptions,
-				pay,
-				createdOn: firebase.firestore.FieldValue.serverTimestamp(),
+			.collection('userPosts');
+
+		dbCollection
+			.doc()
+			.get()
+			.then((doc) => {
+				dbCollection.doc(doc.id).set({
+					id: doc.id,
+					jobTitle,
+					descriptions,
+					pay,
+					createdOn: firebase.firestore.FieldValue.serverTimestamp(),
+				});
 			})
 			.then(() => {
+				dispatch(userJobPosts());
 				navigation.popToTop();
 			});
 	};
