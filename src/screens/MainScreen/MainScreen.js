@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { firebase } from '../../firebase/config';
 import { View, Text, FlatList, SafeAreaView } from 'react-native';
 import JobsScreen from '../JobsScreen/JobsScreen';
 import AddJobScreen from '../AddJobScreen/AddJobScreen';
@@ -38,6 +39,12 @@ const MainScreen = ({ navigation }) => {
 				<Tab.Screen
 					name="AddJob"
 					component={AddJobScreen}
+					listeners={({ navigation }) => ({
+						tabPress: (event) => {
+							event.preventDefault();
+							navigation.navigate('New Job');
+						},
+					})}
 					options={{
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons name="plus-box" color={color} size={26} />
@@ -45,8 +52,16 @@ const MainScreen = ({ navigation }) => {
 					}}
 				/>
 				<Tab.Screen
-					name="Profile"
+					name="ProfileScreen"
 					component={ProfileScreen}
+					listeners={({ navigation }) => ({
+						tabPress: (event) => {
+							event.preventDefault();
+							navigation.navigate('Profile', {
+								uid: firebase.auth().currentUser.uid,
+							});
+						},
+					})}
 					options={{
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons

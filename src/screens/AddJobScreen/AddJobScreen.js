@@ -3,14 +3,21 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { addJob } from '../../redux/actions';
 
 const AddJobScreen = ({ navigation }) => {
 	const [newJobData, setNewJobData] = useState({
 		jobTitle: '',
 		descriptions: '',
+		pay: '',
 	});
-	const { jobTitle, descriptions } = newJobData;
+	const { jobTitle, descriptions, pay } = newJobData;
 	const dispatch = useDispatch();
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		dispatch(addJob(jobTitle, descriptions, pay, navigation));
+	};
 
 	return (
 		<View style={styles.container}>
@@ -21,40 +28,39 @@ const AddJobScreen = ({ navigation }) => {
 					style={styles.input}
 					placeholder="Job Title"
 					placeholderTextColor="#aaaaaa"
-					onChangeText={(text) => console.log(text)}
+					onChangeText={(text) =>
+						setNewJobData({ ...newJobData, jobTitle: text })
+					}
 					value={jobTitle}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
+					autoCorrect="false"
 				/>
 				<TextInput
 					style={styles.description}
 					placeholderTextColor="#aaaaaa"
 					placeholder="Descriptions"
-					onChangeText={(text) => console.log(text)}
+					onChangeText={(text) =>
+						setNewJobData({ ...newJobData, descriptions: text })
+					}
 					multiline
 					value={descriptions}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
+					autoCorrect="false"
 				/>
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
-					placeholder="Start Date"
-					onChangeText={(text) => console.log(text)}
-					value={descriptions}
+					placeholder="Pay"
+					onChangeText={(text) => setNewJobData({ ...newJobData, pay: text })}
+					value={pay}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-				<TextInput
-					style={styles.input}
-					placeholderTextColor="#aaaaaa"
-					placeholder="End State"
-					onChangeText={(text) => console.log(text)}
-					value={descriptions}
-					underlineColorAndroid="transparent"
-					autoCapitalize="none"
-				/>
-				<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={(e) => handleSubmit(e)}>
 					<Text style={styles.buttonTitle}>Post It!</Text>
 				</TouchableOpacity>
 			</KeyboardAwareScrollView>

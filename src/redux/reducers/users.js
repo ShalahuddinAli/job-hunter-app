@@ -4,6 +4,7 @@ import {
 	USER_CURRENT_STATE,
 	USER_NO_STATE,
 	USER_STATE_ERROR,
+	ADD_JOB,
 } from '../constants';
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
 	posts: [],
 };
 
-const user = (state = initialState, action) => {
+const users = (state = initialState, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
@@ -30,9 +31,13 @@ const user = (state = initialState, action) => {
 				...state,
 				loading: payload,
 			};
+		// case ADD_JOB:
+		//      return{
+		//           ...state,posts:[...posts,payload]
+		//      }
 		default:
 			return state;
 	}
 };
 
-export default user;
+export default users;

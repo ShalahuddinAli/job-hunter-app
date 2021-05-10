@@ -97,39 +97,40 @@ export const signIn = (email, password, navigation) => {
 	};
 };
 
-// export const getJobs = () => {
-// 	return (dispatch) => {
-// 		firebase
-// 			.auth()
-// 			.signInWithEmailAndPassword(email, password)
-// 			.then((res) => {
-// 				const uid = res.user.uid;
-// 				const usersRef = firebase.firestore().collection('users');
-// 				usersRef
-// 					.doc(uid)
-// 					.get()
-// 					.then((doc) => {
-// 						if (!doc.exists) {
-// 							alert('User does not exist anymore.');
-// 							return;
-// 						}
-// 						const user = doc.data();
-// 						dispatch({
-// 							type: GET_JOBS,
-// 							payload: { user: user, loading: false },
-// 						});
-// 					})
-// 					.catch((error) => {
-// 						alert(error);
-// 					});
-// 			})
-// 			.catch((error) => {
-// 				alert(error);
-// 			});
-// 	};
-// };
+export const getJobs = () => {
+	return (dispatch) => {
+		firebase
+			.firestore()
+			.collectionGroup('userPosts')
+			.get()
+			.then((res) => {
+				const uid = res.user.uid;
+				const usersRef = firebase.firestore().collection('users');
+				usersRef
+					.doc(uid)
+					.get()
+					.then((doc) => {
+						if (!doc.exists) {
+							alert('User does not exist anymore.');
+							return;
+						}
+						const user = doc.data();
+						dispatch({
+							type: GET_JOBS,
+							payload: { user: user, loading: false },
+						});
+					})
+					.catch((error) => {
+						alert(error);
+					});
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
+};
 
-export const addJob = () => {
+export const addJob = (jobTitle, descriptions, pay, navigation) => {
 	return (dispatch) => {
 		firebase
 			.firestore()
@@ -137,13 +138,13 @@ export const addJob = () => {
 			.doc(firebase.auth().currentUser.uid)
 			.collection('userPosts')
 			.add({
-				downloadURL,
-				caption,
-				likesCount: 0,
-				creation: firebase.firestore.FieldValue.serverTimestamp(),
+				jobTitle,
+				descriptions,
+				pay,
+				createdOn: firebase.firestore.FieldValue.serverTimestamp(),
 			})
-			.then(function () {
-				props.navigation.popToTop();
+			.then(() => {
+				navigation.popToTop();
 			});
 	};
 };

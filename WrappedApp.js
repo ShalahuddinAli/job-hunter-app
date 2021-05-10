@@ -41,7 +41,7 @@ const WrappedApp = () => {
 							component={MainScreen}
 							options={{ headerShown: false }}
 						/>
-						<Stack.Screen name="AddJob" component={AddJobScreen} />
+						<Stack.Screen name="New Job" component={AddJobScreen} />
 						<Stack.Screen name="Profile" component={ProfileScreen} />
 					</>
 				) : (

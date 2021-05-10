@@ -10,9 +10,9 @@ export const SIGN_IN = 'SIGN_IN';
 
 export const GET_JOBS = 'GET_JOBS';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const ADD_JOB = 'ADD_JOB';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const GET_USER_JOBS = 'GET_USER_JOBS';
 
 // export const USER_NO_STATE = 'USER_NO_STATE';
 
