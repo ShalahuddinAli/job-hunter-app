@@ -128,3 +128,22 @@ export const signIn = (email, password, navigation) => {
 // 			});
 // 	};
 // };
+
+export const addJob = () => {
+	return (dispatch) => {
+		firebase
+			.firestore()
+			.collection('posts')
+			.doc(firebase.auth().currentUser.uid)
+			.collection('userPosts')
+			.add({
+				downloadURL,
+				caption,
+				likesCount: 0,
+				creation: firebase.firestore.FieldValue.serverTimestamp(),
+			})
+			.then(function () {
+				props.navigation.popToTop();
+			});
+	};
+};
