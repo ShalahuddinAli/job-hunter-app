@@ -7,6 +7,8 @@ import {
 	USER_STATE_ERROR,
 	GET_JOBS,
 	GET_USER_JOBS,
+	SIGN_OUT,
+	CLEAR_JOBS,
 } from '../constants';
 
 export const userCurrentState = () => {
@@ -96,6 +98,19 @@ export const signIn = (email, password) => {
 			.catch((error) => {
 				alert(error);
 			});
+	};
+};
+
+export const signOut = () => {
+	return (dispatch) => {
+		firebase.auth().signOut();
+		dispatch({ type: SIGN_OUT });
+	};
+};
+
+export const clearJobs = () => {
+	return (dispatch) => {
+		dispatch({ type: CLEAR_JOBS });
 	};
 };
 

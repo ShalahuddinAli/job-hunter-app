@@ -1,6 +1,7 @@
 import {
 	SIGN_UP,
 	SIGN_IN,
+	SIGN_OUT,
 	USER_CURRENT_STATE,
 	USER_NO_STATE,
 	USER_STATE_ERROR,
@@ -35,6 +36,12 @@ const users = (state = initialState, action) => {
 			return {
 				...state,
 				posts: payload,
+			};
+		case SIGN_OUT:
+			return {
+				loading: true,
+				user: null,
+				posts: [],
 			};
 		default:
 			return state;

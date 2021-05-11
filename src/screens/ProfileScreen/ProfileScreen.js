@@ -1,12 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import firebase from 'firebase';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from '../../redux/actions';
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
+	const user = useSelector((state) => state.users);
+	const dispatch = useDispatch();
+	console.log(props);
+	console.log(user);
+
+	const handleOut = (e) => {
+		e.preventDefault();
+		dispatch(signOut());
+	};
+
 	return (
-		<View>
-			<Text>profile</Text>
-		</View>
+		<>
+			<View>
+				<Text>{user.user.username}</Text>
+			</View>
+			<View
+				style={{
+					flex: 2,
+					flexDirection: 'row',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}>
+				<View>
+					<Text>Jobs Created: {user.posts.length}</Text>
+				</View>
+				<View>
+					<Text>Email: {user.user.email}</Text>
+				</View>
+			</View>
+			<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+				<TouchableOpacity onPress={(e) => handleOut(e)}>
+					<Text>Logout</Text>
+				</TouchableOpacity>
+			</View>
+		</>
 	);
 };
 export default ProfileScreen;

@@ -12,9 +12,9 @@ export const GET_JOBS = 'GET_JOBS';
 
 export const GET_USER_JOBS = 'GET_USER_JOBS';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const SIGN_OUT = 'SIGN_OUT';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const CLEAR_JOBS = 'CLEAR_JOBS';
 
 // export const USER_NO_STATE = 'USER_NO_STATE';
 
