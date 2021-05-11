@@ -24,7 +24,7 @@ const RegistrationScreen = ({ navigation }) => {
 			alert("Passwords don't match.");
 			return;
 		}
-		dispatch(signUp(email, password, username, navigation));
+		dispatch(signUp(email, password, username));
 	};
 	return (
 		<View style={styles.container}>

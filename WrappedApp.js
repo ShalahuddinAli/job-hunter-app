@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { decode, encode } from 'base-64';
 import { useSelector, useDispatch } from 'react-redux';
 import { userCurrentState } from './src/redux/actions';
-import MainScreen from './src/screens/MainScreen/MainScreen';
+import MyTab from './src/screens/MyTab/MyTab';
 import AddJobScreen from './src/screens/AddJobScreen/AddJobScreen';
 import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen/RegistrationScreen';
@@ -25,7 +25,7 @@ const WrappedApp = () => {
 
 	useEffect(() => {
 		dispatch(userCurrentState());
-	}, [dispatch]);
+	}, []);
 
 	if (loading) {
 		return <></>;
@@ -37,8 +37,8 @@ const WrappedApp = () => {
 				{user ? (
 					<>
 						<Stack.Screen
-							name="Main"
-							component={MainScreen}
+							name="MyTab"
+							component={MyTab}
 							options={{ headerShown: false }}
 						/>
 						<Stack.Screen name="New Job" component={AddJobScreen} />

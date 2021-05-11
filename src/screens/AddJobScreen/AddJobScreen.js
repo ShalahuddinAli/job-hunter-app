@@ -34,7 +34,7 @@ const AddJobScreen = ({ navigation }) => {
 					value={jobTitle}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
-					autoCorrect="false"
+					autoCorrect={false}
 				/>
 				<TextInput
 					style={styles.description}
@@ -47,7 +47,7 @@ const AddJobScreen = ({ navigation }) => {
 					value={descriptions}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
-					autoCorrect="false"
+					autoCorrect={false}
 				/>
 				<TextInput
 					style={styles.input}
@@ -57,6 +57,7 @@ const AddJobScreen = ({ navigation }) => {
 					value={pay}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
+					autoCorrect={false}
 				/>
 				<TouchableOpacity
 					style={styles.button}

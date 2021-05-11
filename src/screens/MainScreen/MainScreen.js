@@ -1,80 +1,42 @@
-import React, { useEffect } from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { firebase } from '../../firebase/config';
-import { View, Text, FlatList, SafeAreaView } from 'react-native';
-import JobsScreen from '../JobsScreen/JobsScreen';
-import AddJobScreen from '../AddJobScreen/AddJobScreen';
-import ProfileScreen from '../ProfileScreen/ProfileScreen';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, FlatList } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { getJobs } from '../../redux/actions';
 
-const Tab = createMaterialBottomTabNavigator();
+const MainScreen = () => {
+	const jobs = useSelector((state) => state.jobs.jobs);
+	console.log(jobs);
 
-const MainScreen = ({ navigation }) => {
-	const user = useSelector((state) => state);
-	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	dispatch(getJobs());
-	// }, []);
-
-	console.log(user);
 	return (
 		<>
 			<SafeAreaView>
-				<Text>Hello</Text>
+				<SearchBar
+					containerStyle={{ padding: 0, margin: 30 }}
+					inputContainerStyle={{ borderRadius: 50, padding: 0, margin: 0 }}
+					placeholder="Search Job Title"
+					lightTheme
+					round
+					showLoading
+				/>
 			</SafeAreaView>
-			<Tab.Navigator initialRouteName="Jobs" labeled={false}>
-				<Tab.Screen
-					name="Jobs"
-					component={JobsScreen}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons name="home" color={color} size={26} />
-						),
-					}}
-				/>
-
-				<Tab.Screen
-					name="AddJob"
-					component={AddJobScreen}
-					listeners={({ navigation }) => ({
-						tabPress: (event) => {
-							event.preventDefault();
-							navigation.navigate('New Job');
-						},
-					})}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons name="plus-box" color={color} size={26} />
-						),
-					}}
-				/>
-				<Tab.Screen
-					name="ProfileScreen"
-					component={ProfileScreen}
-					listeners={({ navigation }) => ({
-						tabPress: (event) => {
-							event.preventDefault();
-							navigation.navigate('Profile', {
-								uid: firebase.auth().currentUser.uid,
-							});
-						},
-					})}
-					options={{
-						tabBarIcon: ({ color, size }) => (
-							<MaterialCommunityIcons
-								name="account-circle"
-								color={color}
-								size={26}
-							/>
-						),
-					}}
-				/>
-			</Tab.Navigator>
+			{jobs.map((job, index) => (
+				<TouchableOpacity
+					Style={{ margin: 10, height: 150, borderRadius: 20 }}
+					key={index}>
+					<View>
+						<Text style={{ marginBottom: 30 }}>{job.jobTitle}</Text>
+					</View>
+					<View>
+						<Text>{job.pay}</Text>
+					</View>
+					<View>
+						<Text>{JSON.stringify(job.createdOn)}</Text>
+					</View>
+				</TouchableOpacity>
+			))}
 		</>
 	);
 };
-
 export default MainScreen;

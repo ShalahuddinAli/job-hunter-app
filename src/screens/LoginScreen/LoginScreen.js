@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
 	};
 
 	const onLoginPress = () => {
-		dispatch(signIn(email, password, navigation));
+		dispatch(signIn(email, password));
 	};
 
 	return (
@@ -71,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
 
 export default LoginScreen;
 
-StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',

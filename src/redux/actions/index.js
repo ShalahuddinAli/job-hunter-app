@@ -35,7 +35,7 @@ export const userCurrentState = () => {
 	};
 };
 
-export const signUp = (email, password, username, navigation) => {
+export const signUp = (email, password, username) => {
 	return (dispatch) => {
 		firebase
 			.auth()
@@ -67,7 +67,7 @@ export const signUp = (email, password, username, navigation) => {
 	};
 };
 
-export const signIn = (email, password, navigation) => {
+export const signIn = (email, password) => {
 	return (dispatch) => {
 		firebase
 			.auth()
@@ -109,8 +109,10 @@ export const userJobPosts = () => {
 			.get()
 			.then((querySnapshot) => {
 				const posts = querySnapshot.docs.map((doc) => doc.data());
-				console.log(posts, 'dddd');
 				dispatch({ type: GET_USER_JOBS, payload: posts });
+			})
+			.catch((error) => {
+				alert(error);
 			});
 	};
 };
@@ -120,27 +122,12 @@ export const getJobs = () => {
 		firebase
 			.firestore()
 			.collectionGroup('userPosts')
+			.orderBy('createdOn', 'desc')
 			.get()
-			.then((res) => {
-				const uid = res.user.uid;
-				const usersRef = firebase.firestore().collection('users');
-				usersRef
-					.doc(uid)
-					.get()
-					.then((doc) => {
-						if (!doc.exists) {
-							alert('User does not exist anymore.');
-							return;
-						}
-						const user = doc.data();
-						dispatch({
-							type: GET_JOBS,
-							payload: { user: user, loading: false },
-						});
-					})
-					.catch((error) => {
-						alert(error);
-					});
+			.then((querySnapshot) => {
+				const posts = querySnapshot.docs.map((doc) => doc.data());
+				console.log(posts, 'line 129 action index');
+				dispatch({ type: GET_JOBS, payload: posts });
 			})
 			.catch((error) => {
 				alert(error);
@@ -168,9 +155,16 @@ export const addJob = (jobTitle, descriptions, pay, navigation) => {
 					createdOn: firebase.firestore.FieldValue.serverTimestamp(),
 				});
 			})
+			.catch((error) => {
+				alert(error);
+			})
 			.then(() => {
 				dispatch(userJobPosts());
+				dispatch(getJobs());
 				navigation.popToTop();
+			})
+			.catch((error) => {
+				alert(error);
 			});
 	};
 };
