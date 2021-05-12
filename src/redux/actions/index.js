@@ -167,7 +167,7 @@ export const addJob = (jobTitle, descriptions, pay, navigation) => {
 					jobTitle,
 					descriptions,
 					pay,
-					createdOn: firebase.firestore.FieldValue.serverTimestamp(),
+					createdOn: new Date(),
 				});
 			})
 			.catch((error) => {
