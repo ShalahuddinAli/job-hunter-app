@@ -19,7 +19,6 @@ const MyTab = ({ navigation }) => {
 		dispatch(getJobs());
 	}, []);
 
-	console.log(user);
 	return (
 		<>
 			<Tab.Navigator initialRouteName="Main" labeled={false}>

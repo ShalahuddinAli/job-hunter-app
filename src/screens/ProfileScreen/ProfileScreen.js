@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Avatar, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
+import UserJobs from '../../components/UserJobs';
 import { signOut } from '../../redux/actions';
 
 const ProfileScreen = (props) => {
@@ -39,9 +41,76 @@ const ProfileScreen = (props) => {
 				</TouchableOpacity>
 			</View>
 		</>
+		// <View>
+		// 	<View>
+		// 		<Avatar
+		// 			source={require('../../../assets/splash.png')}
+		// 			size="giant"
+		// 			style={{ width: 100, height: 100 }}
+		// 		/>
+		// 		<Text category="h6">Test User</Text>
+		// 	</View>
+		// 	<View>
+		// 		<View>
+		// 			<Text category="s1">{user.posts.length}</Text>
+		// 			<Text appearance="hint" category="s2">
+		// 				Job Posts
+		// 			</Text>
+		// 		</View>
+		// 		<View>
+		// 			<Text category="s1">0</Text>
+		// 			<Text appearance="hint" category="s2">
+		// 				Following
+		// 			</Text>
+		// 		</View>
+		// 	</View>
+		// 	<View>
+		// 		<Button title="LOGOUT" onPress={(e) => handleOut(e)} />
+		// 		<View />
+		// 		<Button title="MESSAGE" />
+		// 	</View>
+		// 	<UserJobs />
+		// </View>
 	);
 };
 export default ProfileScreen;
+
+{
+	/* <View>
+	<View>
+		<Avatar
+			source={require('../../../assets/splash.png')}
+			size="giant"
+			style={{ width: 100, height: 100 }}
+		/>
+		<Text category="h6">Test User</Text>
+	</View>
+	<View>
+		<View>
+			<Text category="s1">{user.posts.length}</Text>
+			<Text appearance="hint" category="s2">
+				Job Posts
+			</Text>
+		</View>
+		<View>
+			<Text category="s1">0</Text>
+			<Text appearance="hint" category="s2">
+				Following
+			</Text>
+		</View>
+	</View>
+	<View>
+		<Button appearance="ghost" status="danger" onPress={(e) => handleOut(e)}>
+			LOGOUT
+		</Button>
+		<View />
+		<Button appearance="ghost" status="danger">
+			MESSAGE
+		</Button>
+	</View>
+	<Gallery />
+</View>; */
+}
 
 // import React, {useState} from 'react';
 // import {View, Button, Platform} from 'react-native';
