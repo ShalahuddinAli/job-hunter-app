@@ -4,7 +4,7 @@ import JobsList from './JobsList';
 
 const UserJobs = () => {
 	const jobs = useSelector((state) => state.users.posts);
-	console.log(jobs);
+	// console.log(jobs);
 	return (
 		<>
 			<JobsList jobs={jobs} />

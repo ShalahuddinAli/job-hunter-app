@@ -6,6 +6,7 @@ import {
 	USER_NO_STATE,
 	USER_STATE_ERROR,
 	GET_USER_JOBS,
+	DELETE_JOB,
 } from '../constants';
 
 const initialState = {
@@ -43,6 +44,7 @@ const users = (state = initialState, action) => {
 				user: null,
 				posts: [],
 			};
+
 		default:
 			return state;
 	}

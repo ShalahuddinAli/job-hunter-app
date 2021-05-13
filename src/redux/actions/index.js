@@ -168,6 +168,7 @@ export const addJob = (jobTitle, descriptions, pay, navigation) => {
 					jobTitle,
 					descriptions,
 					pay,
+					createdBy: firebase.auth().currentUser.uid,
 					createdOn: new Date(),
 				});
 			})
@@ -178,6 +179,27 @@ export const addJob = (jobTitle, descriptions, pay, navigation) => {
 				dispatch(userJobPosts());
 				dispatch(getJobs());
 				navigation.popToTop();
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
+};
+
+export const deleteJob = (jobId) => {
+	return (dispatch) => {
+		const dbCollection = firebase
+			.firestore()
+			.collection('posts')
+			.doc(firebase.auth().currentUser.uid)
+			.collection('userPosts');
+
+		dbCollection
+			.doc(jobId)
+			.delete()
+			.then(() => {
+				dispatch(userJobPosts());
+				dispatch(getJobs());
 			})
 			.catch((error) => {
 				alert(error);
