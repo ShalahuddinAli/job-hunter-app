@@ -18,6 +18,6 @@ export const CLEAR_JOBS = 'CLEAR_JOBS';
 
 export const GET_JOB_DETAILS = 'GET_JOB_DETAILS';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const JOB_UPDATE = 'JOB_UPDATE';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const CLEAR_JOB = 'CLEAR_JOB';

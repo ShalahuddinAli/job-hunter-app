@@ -9,24 +9,29 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch } from 'react-redux';
-import { signIn } from '../../redux/actions';
+import { signUp } from '../redux/actions/index';
 
-const LoginScreen = ({ navigation }) => {
-	const [userCredential, setUserCredential] = useState({
+const RegistrationScreen = ({ navigation }) => {
+	const [newUserInfo, setNewUserInfo] = useState({
+		username: '',
 		email: '',
 		password: '',
+		confirmPassword: '',
 	});
-	const { email, password } = userCredential;
+	const { username, email, password, confirmPassword } = newUserInfo;
 	const dispatch = useDispatch();
 
 	const onFooterLinkPress = () => {
-		navigation.navigate('Registration');
+		navigation.navigate('Login');
 	};
 
-	const onLoginPress = () => {
-		dispatch(signIn(email, password));
+	const handleSubmit = () => {
+		if (password !== confirmPassword) {
+			alert("Passwords don't match.");
+			return;
+		}
+		dispatch(signUp(email, password, username));
 	};
-
 	return (
 		<View style={styles.container}>
 			<KeyboardAwareScrollView
@@ -34,40 +39,67 @@ const LoginScreen = ({ navigation }) => {
 				keyboardShouldPersistTaps="always">
 				<Image
 					style={styles.logo}
-					source={require('../../../assets/Login.gif')}
+					source={require('../../assets/Registeration.gif')}
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="Username"
+					placeholderTextColor="#aaaaaa"
+					onChangeText={(text) =>
+						setNewUserInfo({ ...newUserInfo, username: text })
+					}
+					value={username}
+					underlineColorAndroid="transparent"
+					autoCapitalize="none"
 				/>
 				<TextInput
 					style={styles.input}
 					placeholder="E-mail"
 					placeholderTextColor="#aaaaaa"
 					onChangeText={(text) =>
-						setUserCredential({ ...userCredential, email: text })
+						setNewUserInfo({ ...newUserInfo, email: text })
 					}
 					value={email}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
+
 				<TextInput
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
 					secureTextEntry
 					placeholder="Password"
 					onChangeText={(text) =>
-						setUserCredential({ ...userCredential, password: text })
+						setNewUserInfo({ ...newUserInfo, password: text })
 					}
 					value={password}
 					underlineColorAndroid="transparent"
 					autoCapitalize="none"
 				/>
-				<TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-					<Text style={styles.buttonTitle}>Log in</Text>
+
+				<TextInput
+					style={styles.input}
+					placeholderTextColor="#aaaaaa"
+					secureTextEntry
+					placeholder="Confirm Password"
+					onChangeText={(text) =>
+						setNewUserInfo({ ...newUserInfo, confirmPassword: text })
+					}
+					value={confirmPassword}
+					underlineColorAndroid="transparent"
+					autoCapitalize="none"
+				/>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={(e) => handleSubmit(e)}>
+					<Text style={styles.buttonTitle}>Create account</Text>
 				</TouchableOpacity>
 				<View style={styles.footerView}>
 					<Text style={styles.footerText}>
-						Don't have an account?
+						Already got an account?
 						<Text onPress={onFooterLinkPress} style={styles.footerLink}>
 							{' '}
-							Sign up
+							Log in
 						</Text>
 					</Text>
 				</View>
@@ -76,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
 	);
 };
 
-export default LoginScreen;
+export default RegistrationScreen;
 
 const styles = StyleSheet.create({
 	container: {
@@ -85,8 +117,8 @@ const styles = StyleSheet.create({
 	},
 	logo: {
 		flex: 1,
-		height: 300,
-		width: 300,
+		height: 200,
+		width: 200,
 		alignSelf: 'center',
 		margin: 30,
 	},

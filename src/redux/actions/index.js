@@ -10,6 +10,8 @@ import {
 	SIGN_OUT,
 	CLEAR_JOBS,
 	GET_JOB_DETAILS,
+	JOB_UPDATE,
+	CLEAR_JOB,
 } from '../constants';
 
 export const userCurrentState = () => {
@@ -43,8 +45,8 @@ export const signUp = (email, password, username) => {
 		firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
-			.then((res) => {
-				const uid = res.user.uid;
+			.then((snapshot) => {
+				const uid = snapshot.user.uid;
 				const data = {
 					id: uid,
 					email,
@@ -75,8 +77,8 @@ export const signIn = (email, password) => {
 		firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then((res) => {
-				const uid = res.user.uid;
+			.then((snapshot) => {
+				const uid = snapshot.user.uid;
 				const usersRef = firebase.firestore().collection('users');
 				usersRef
 					.doc(uid)
@@ -135,14 +137,16 @@ export const userJobPosts = () => {
 
 export const getJobs = () => {
 	return (dispatch) => {
+		const user = firebase.auth().currentUser.uid;
+
 		firebase
 			.firestore()
 			.collectionGroup('userPosts')
+			// .where('createdBy', '==', user)
 			.orderBy('createdOn', 'desc')
 			.get()
 			.then((querySnapshot) => {
 				const posts = querySnapshot.docs.map((doc) => doc.data());
-				console.log(posts, 'line 129 action index');
 				dispatch({ type: GET_JOBS, payload: posts });
 			})
 			.catch((error) => {
@@ -210,5 +214,36 @@ export const deleteJob = (jobId) => {
 export const getJob = (jobDetails) => {
 	return (dispatch) => {
 		dispatch({ type: GET_JOB_DETAILS, payload: jobDetails });
+	};
+};
+
+export const updateJob = (id, jobTitle, descriptions, pay, navigation) => {
+	return (dispatch) => {
+		const dbCollection = firebase
+			.firestore()
+			.collection('posts')
+			.doc(firebase.auth().currentUser.uid)
+			.collection('userPosts');
+
+		dbCollection
+			.doc(id)
+			.update({
+				jobTitle,
+				descriptions,
+				pay,
+			})
+			.then((snapshot) => {
+				dispatch(userJobPosts());
+				dispatch(getJobs());
+			})
+			.catch((error) => {
+				alert(error);
+			});
+	};
+};
+
+export const clearJob = () => {
+	return (dispatch) => {
+		dispatch({ type: CLEAR_JOB });
 	};
 };

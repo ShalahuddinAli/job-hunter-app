@@ -1,22 +1,45 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	StyleSheet,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { addJob } from '../../redux/actions';
+import { addJob, updateJob } from '../redux/actions/index';
+import { useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AddJobScreen = ({ navigation }) => {
+	const job = useSelector((state) => state.jobs.job);
+	const dispatch = useDispatch();
 	const [newJobData, setNewJobData] = useState({
-		jobTitle: '',
-		descriptions: '',
-		pay: '',
+		jobTitle: job.id ? job.jobTitle : '',
+		descriptions: job.id ? job.descriptions : '',
+		pay: job.id ? job.pay : '',
 	});
 	const { jobTitle, descriptions, pay } = newJobData;
-	const dispatch = useDispatch();
 
 	const handleSubmit = (e) => {
+		// check for empty fileds
+		if (pay === '' || descriptions === '' || jobTitle === '') {
+			return alert('please enter something');
+		}
+		//  check if data changed. if no change, dont request. very expensive
+		if (
+			job.pay === pay &&
+			job.descriptions === descriptions &&
+			job.jobTitle === jobTitle
+		) {
+			return alert('please enter something exciting');
+		}
+
 		e.preventDefault();
-		dispatch(addJob(jobTitle, descriptions, pay, navigation));
+		job.id
+			? dispatch(updateJob(job.id, jobTitle, descriptions, pay, navigation))
+			: dispatch(addJob(jobTitle, descriptions, pay, navigation));
 	};
 
 	return (
@@ -25,6 +48,7 @@ const AddJobScreen = ({ navigation }) => {
 				style={{ flex: 1, width: '100%' }}
 				keyboardShouldPersistTaps="always">
 				<TextInput
+					required={true}
 					style={styles.input}
 					placeholder="Job Title"
 					placeholderTextColor="#aaaaaa"
@@ -37,6 +61,7 @@ const AddJobScreen = ({ navigation }) => {
 					autoCorrect={false}
 				/>
 				<TextInput
+					required={true}
 					style={styles.description}
 					placeholderTextColor="#aaaaaa"
 					placeholder="Descriptions"
@@ -50,6 +75,7 @@ const AddJobScreen = ({ navigation }) => {
 					autoCorrect={false}
 				/>
 				<TextInput
+					required={true}
 					style={styles.input}
 					placeholderTextColor="#aaaaaa"
 					placeholder="Pay"
@@ -62,7 +88,9 @@ const AddJobScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={styles.button}
 					onPress={(e) => handleSubmit(e)}>
-					<Text style={styles.buttonTitle}>Post It!</Text>
+					<Text style={styles.buttonTitle}>
+						{job.id ? 'Update' : 'Post It!'}
+					</Text>
 				</TouchableOpacity>
 			</KeyboardAwareScrollView>
 		</View>

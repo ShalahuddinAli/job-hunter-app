@@ -1,4 +1,4 @@
-import { CLEAR_JOBS, GET_JOBS, GET_JOB_DETAILS } from '../constants';
+import { CLEAR_JOB, CLEAR_JOBS, GET_JOBS, GET_JOB_DETAILS } from '../constants';
 
 const initialState = {
 	jobs: [],
@@ -20,6 +20,11 @@ const jobs = (state = initialState, action) => {
 			return {
 				...state,
 				job: payload,
+			};
+		case CLEAR_JOB:
+			return {
+				...state,
+				job: '',
 			};
 		default:
 			return state;

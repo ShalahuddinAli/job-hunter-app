@@ -2,14 +2,13 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Avatar, Divider, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '../../redux/actions';
-import UserJobs from '../../components/UserJobs';
+import { signOut } from '../redux/actions/index';
+import UserJobs from '../components/UserJobs';
 import { AntDesign } from 'react-native-vector-icons';
 
-const ProfileScreen = (props) => {
+const ProfileScreen = ({ navigation }) => {
 	const user = useSelector((state) => state.users);
 	const dispatch = useDispatch();
-	console.log(props);
 	console.log(user);
 
 	const handleOut = (e) => {
@@ -44,7 +43,7 @@ const ProfileScreen = (props) => {
 				<Divider />
 			</View>
 			{/* <View style={styles.flatlist}> */}
-			<UserJobs />
+			<UserJobs navigation={navigation} />
 			{/* </View> */}
 			<View
 				style={{

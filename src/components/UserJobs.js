@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import JobsList from './JobsList';
 
-const UserJobs = () => {
+const UserJobs = ({ navigation }) => {
 	const jobs = useSelector((state) => state.users.posts);
 	// console.log(jobs);
 	return (
 		<>
-			<JobsList jobs={jobs} />
+			<JobsList jobs={jobs} navigation={navigation} />
 		</>
 	);
 };
