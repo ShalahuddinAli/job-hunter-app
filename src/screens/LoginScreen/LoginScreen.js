@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+	Image,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+	StyleSheet,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../../redux/actions';
-import { StyleSheet } from 'react-native';
 
 const LoginScreen = ({ navigation }) => {
 	const [userCredential, setUserCredential] = useState({
@@ -28,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
 				keyboardShouldPersistTaps="always">
 				<Image
 					style={styles.logo}
-					source={require('../../../assets/icon.png')}
+					source={require('../../../assets/Login.gif')}
 				/>
 				<TextInput
 					style={styles.input}
@@ -60,6 +66,7 @@ const LoginScreen = ({ navigation }) => {
 					<Text style={styles.footerText}>
 						Don't have an account?
 						<Text onPress={onFooterLinkPress} style={styles.footerLink}>
+							{' '}
 							Sign up
 						</Text>
 					</Text>
@@ -76,11 +83,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 	},
-	title: {},
 	logo: {
 		flex: 1,
-		height: 120,
-		width: 90,
+		height: 300,
+		width: 300,
 		alignSelf: 'center',
 		margin: 30,
 	},
@@ -96,7 +102,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 16,
 	},
 	button: {
-		backgroundColor: '#788eec',
+		backgroundColor: '#2ba5d7',
 		marginLeft: 30,
 		marginRight: 30,
 		marginTop: 20,
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	buttonTitle: {
-		color: 'white',
+		color: '#f3f2f0',
 		fontSize: 16,
 		fontWeight: 'bold',
 	},
@@ -117,10 +123,10 @@ const styles = StyleSheet.create({
 	},
 	footerText: {
 		fontSize: 16,
-		color: '#2e2e2d',
+		color: '#070414',
 	},
 	footerLink: {
-		color: '#788eec',
+		color: '#da1d4e',
 		fontWeight: 'bold',
 		fontSize: 16,
 	},

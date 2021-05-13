@@ -41,13 +41,45 @@ const WrappedApp = () => {
 							component={MyTab}
 							options={{ headerShown: false }}
 						/>
-						<Stack.Screen name="New Job" component={AddJobScreen} />
+						<Stack.Screen
+							name="New Job"
+							component={AddJobScreen}
+							options={{ headerBackground: '#2ba5d7' }}
+						/>
 						<Stack.Screen name="Profile" component={ProfileScreen} />
 					</>
 				) : (
 					<>
-						<Stack.Screen name="Login" component={LoginScreen} />
-						<Stack.Screen name="Registration" component={RegistrationScreen} />
+						<Stack.Screen
+							name="Login"
+							component={LoginScreen}
+							options={{
+								headerStyle: {
+									backgroundColor: '#2ba5d7',
+								},
+								headerTitleStyle: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+							}}
+						/>
+						<Stack.Screen
+							name="Registration"
+							component={RegistrationScreen}
+							options={{
+								headerStyle: {
+									backgroundColor: '#2ba5d7',
+								},
+								headerTitleStyle: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+								headerTintColor: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+							}}
+						/>
 					</>
 				)}
 			</Stack.Navigator>
