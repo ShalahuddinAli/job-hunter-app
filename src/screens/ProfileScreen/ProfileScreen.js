@@ -53,8 +53,8 @@ const ProfileScreen = (props) => {
 					marginTop: 10,
 				}}>
 				<Button
-					raised
-					icon={<AntDesign name="logout" size={20} color="white" />}
+					style={styles.button}
+					icon={<AntDesign name="logout" size={20} color="#f3f2f0" />}
 					iconRight
 					title="Log Out    "
 					onPress={(e) => handleOut(e)}
@@ -92,5 +92,14 @@ const styles = StyleSheet.create({
 		margin: 20,
 		alignItems: 'center',
 		zIndex: 99999,
+	},
+	button: {
+		backgroundColor: '#2ba5d7',
+		borderRadius: 5,
+		alignItems: 'center',
+		justifyContent: 'center',
+		color: '#f3f2f0',
+		fontSize: 16,
+		fontWeight: 'bold',
 	},
 });

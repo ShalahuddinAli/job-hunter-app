@@ -10,6 +10,7 @@ import AddJobScreen from './src/screens/AddJobScreen/AddJobScreen';
 import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen/RegistrationScreen';
 import LoginScreen from './src/screens/LoginScreen/LoginScreen';
+import JobDetailsScreen from './src/screens/JobDetailsScreen';
 
 if (!global.btoa) {
 	global.btoa = encode;
@@ -37,16 +38,61 @@ const WrappedApp = () => {
 				{user ? (
 					<>
 						<Stack.Screen
-							name="MyTab"
+							name="Home"
 							component={MyTab}
 							options={{ headerShown: false }}
 						/>
 						<Stack.Screen
 							name="New Job"
 							component={AddJobScreen}
-							options={{ headerBackground: '#2ba5d7' }}
+							options={{
+								headerStyle: {
+									backgroundColor: '#2ba5d7',
+								},
+								headerTitleStyle: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+								headerTintColor: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+							}}
 						/>
-						<Stack.Screen name="Profile" component={ProfileScreen} />
+						<Stack.Screen
+							name="Profile"
+							component={ProfileScreen}
+							options={{
+								headerStyle: {
+									backgroundColor: '#2ba5d7',
+								},
+								headerTitleStyle: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+								headerTintColor: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+							}}
+						/>
+						<Stack.Screen
+							name="Job Details"
+							component={JobDetailsScreen}
+							options={{
+								headerStyle: {
+									backgroundColor: '#2ba5d7',
+								},
+								headerTitleStyle: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+								headerTintColor: {
+									fontWeight: 'bold',
+									color: '#070414',
+								},
+							}}
+						/>
 					</>
 				) : (
 					<>

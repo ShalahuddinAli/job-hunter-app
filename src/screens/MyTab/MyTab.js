@@ -20,7 +20,10 @@ const MyTab = ({ navigation }) => {
 
 	return (
 		<>
-			<Tab.Navigator initialRouteName="Main" labeled={false}>
+			<Tab.Navigator
+				initialRouteName="Main"
+				// labeled={false}
+				barStyle={{ backgroundColor: '#2ba5d7' }}>
 				<Tab.Screen
 					name="Main"
 					component={MainScreen}
@@ -32,7 +35,7 @@ const MyTab = ({ navigation }) => {
 				/>
 
 				<Tab.Screen
-					name="AddJob"
+					name="Add Job"
 					component={AddJobScreen}
 					listeners={({ navigation }) => ({
 						tabPress: (event) => {
@@ -58,6 +61,7 @@ const MyTab = ({ navigation }) => {
 						},
 					})}
 					options={{
+						tabBarLabel: 'Profile',
 						tabBarIcon: ({ color, size }) => (
 							<MaterialCommunityIcons
 								name="account-circle"

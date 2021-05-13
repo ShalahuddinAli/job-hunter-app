@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 16,
 	},
 	button: {
-		backgroundColor: '#788eec',
+		backgroundColor: '#2ba5d7',
 		marginLeft: 30,
 		marginRight: 30,
 		marginTop: 20,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	buttonTitle: {
-		color: 'white',
+		color: '#f3f2f0',
 		fontSize: 16,
 		fontWeight: 'bold',
 	},

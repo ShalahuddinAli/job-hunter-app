@@ -2,8 +2,17 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { getJob } from '../redux/actions/index';
 
-const JobsList = ({ jobs }) => {
+const JobsList = ({ jobs, navigation }) => {
+	const dispatch = useDispatch();
+
+	const handlePress = (jobDetails) => {
+		dispatch(getJob(jobDetails));
+		navigation.navigate('Job Details');
+	};
+
 	const createdDuration = (unix) => {
 		// unixt to full date
 		const momentDate = moment.unix(unix.seconds);
@@ -21,7 +30,9 @@ const JobsList = ({ jobs }) => {
 	const keyExtractor = (item, index) => index.toString();
 
 	const renderItem = ({ item }) => (
-		<ListItem containerStyle={{ margin: 10, borderRadius: 20, height: 150 }}>
+		<ListItem
+			containerStyle={{ margin: 10, borderRadius: 20, height: 150 }}
+			onPress={() => handlePress(item)}>
 			<ListItem.Content>
 				<ListItem.Title>{item.jobTitle}</ListItem.Title>
 				<ListItem.Subtitle>{item.pay}</ListItem.Subtitle>

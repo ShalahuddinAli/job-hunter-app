@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import SearchBar from '../../components/SearchBar';
 import JobsList from '../../components/JobsList';
 
-const MainScreen = () => {
+const MainScreen = ({ navigation }) => {
 	const jobs = useSelector((state) => state.jobs.jobs);
 
 	return (
@@ -12,7 +12,7 @@ const MainScreen = () => {
 			<SafeAreaView>
 				<SearchBar />
 			</SafeAreaView>
-			<JobsList jobs={jobs} />
+			<JobsList jobs={jobs} navigation={navigation} />
 		</>
 	);
 };

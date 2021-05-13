@@ -9,6 +9,7 @@ import {
 	GET_USER_JOBS,
 	SIGN_OUT,
 	CLEAR_JOBS,
+	GET_JOB_DETAILS,
 } from '../constants';
 
 export const userCurrentState = () => {
@@ -181,5 +182,11 @@ export const addJob = (jobTitle, descriptions, pay, navigation) => {
 			.catch((error) => {
 				alert(error);
 			});
+	};
+};
+
+export const getJob = (jobDetails) => {
+	return (dispatch) => {
+		dispatch({ type: GET_JOB_DETAILS, payload: jobDetails });
 	};
 };

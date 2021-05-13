@@ -16,6 +16,6 @@ export const SIGN_OUT = 'SIGN_OUT';
 
 export const CLEAR_JOBS = 'CLEAR_JOBS';
 
-// export const USER_NO_STATE = 'USER_NO_STATE';
+export const GET_JOB_DETAILS = 'GET_JOB_DETAILS';
 
 // export const USER_NO_STATE = 'USER_NO_STATE';
