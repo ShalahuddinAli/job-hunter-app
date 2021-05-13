@@ -1,11 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { useSelector } from 'react-redux';
+import JobsList from './JobsList';
 
 const UserJobs = () => {
+	const jobs = useSelector((state) => state.users.posts);
+	console.log(jobs);
 	return (
-		<View>
-			<Text></Text>
-		</View>
+		<>
+			<JobsList jobs={jobs} />
+		</>
 	);
 };
 

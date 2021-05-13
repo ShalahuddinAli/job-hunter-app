@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { Avatar, Button } from 'react-native-elements';
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { Avatar, Divider, Button } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import UserJobs from '../../components/UserJobs';
 import { signOut } from '../../redux/actions';
+import UserJobs from '../../components/UserJobs';
+import { AntDesign } from 'react-native-vector-icons';
 
 const ProfileScreen = (props) => {
 	const user = useSelector((state) => state.users);
@@ -17,147 +18,79 @@ const ProfileScreen = (props) => {
 	};
 
 	return (
-		<>
-			<View>
-				<Text>{user.user.username}</Text>
+		<View style={styles.container}>
+			<View style={styles.headerContainer}>
+				<Avatar
+					size="large"
+					rounded
+					source={{
+						uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+					}}
+				/>
+				<View style={styles.headerTitleContainer}>
+					<Text style={styles.headerTitle}>{user.user.username}</Text>
+					<Text style={styles.headerTitle}>{user.user.email}</Text>
+					<TouchableOpacity>
+						<Text style={styles.edit}>Edit</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
-			<View
-				style={{
-					flex: 2,
-					flexDirection: 'row',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}>
-				<View>
+
+			<View style={styles.midContainer}>
+				<Divider />
+				<View style={styles.divider}>
 					<Text>Jobs Created: {user.posts.length}</Text>
 				</View>
-				<View>
-					<Text>Email: {user.user.email}</Text>
-				</View>
+				<Divider />
 			</View>
-			<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-				<TouchableOpacity onPress={(e) => handleOut(e)}>
-					<Text>Logout</Text>
-				</TouchableOpacity>
+			{/* <View style={styles.flatlist}> */}
+			<UserJobs />
+			{/* </View> */}
+			<View
+				style={{
+					alignItems: 'center',
+					marginBottom: 15,
+					marginTop: 10,
+				}}>
+				<Button
+					raised
+					icon={<AntDesign name="logout" size={20} color="white" />}
+					iconRight
+					title="Log Out    "
+					onPress={(e) => handleOut(e)}
+				/>
 			</View>
-		</>
-		// <View>
-		// 	<View>
-		// 		<Avatar
-		// 			source={require('../../../assets/splash.png')}
-		// 			size="giant"
-		// 			style={{ width: 100, height: 100 }}
-		// 		/>
-		// 		<Text category="h6">Test User</Text>
-		// 	</View>
-		// 	<View>
-		// 		<View>
-		// 			<Text category="s1">{user.posts.length}</Text>
-		// 			<Text appearance="hint" category="s2">
-		// 				Job Posts
-		// 			</Text>
-		// 		</View>
-		// 		<View>
-		// 			<Text category="s1">0</Text>
-		// 			<Text appearance="hint" category="s2">
-		// 				Following
-		// 			</Text>
-		// 		</View>
-		// 	</View>
-		// 	<View>
-		// 		<Button title="LOGOUT" onPress={(e) => handleOut(e)} />
-		// 		<View />
-		// 		<Button title="MESSAGE" />
-		// 	</View>
-		// 	<UserJobs />
-		// </View>
+		</View>
 	);
 };
 export default ProfileScreen;
 
-{
-	/* <View>
-	<View>
-		<Avatar
-			source={require('../../../assets/splash.png')}
-			size="giant"
-			style={{ width: 100, height: 100 }}
-		/>
-		<Text category="h6">Test User</Text>
-	</View>
-	<View>
-		<View>
-			<Text category="s1">{user.posts.length}</Text>
-			<Text appearance="hint" category="s2">
-				Job Posts
-			</Text>
-		</View>
-		<View>
-			<Text category="s1">0</Text>
-			<Text appearance="hint" category="s2">
-				Following
-			</Text>
-		</View>
-	</View>
-	<View>
-		<Button appearance="ghost" status="danger" onPress={(e) => handleOut(e)}>
-			LOGOUT
-		</Button>
-		<View />
-		<Button appearance="ghost" status="danger">
-			MESSAGE
-		</Button>
-	</View>
-	<Gallery />
-</View>; */
-}
-
-// import React, {useState} from 'react';
-// import {View, Button, Platform} from 'react-native';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-
-// export const ProfileScreen = () => {
-//   const [date, setDate] = useState(new Date(1598051730000));
-//   const [mode, setMode] = useState('date');
-//   const [show, setShow] = useState(false);
-
-//   const onChange = (event, selectedDate) => {
-//     const currentDate = selectedDate || date;
-//     setShow(Platform.OS === 'ios');
-//     setDate(currentDate);
-//   };
-
-//   const showMode = (currentMode) => {
-//     setShow(true);
-//     setMode(currentMode);
-//   };
-
-//   const showDatepicker = () => {
-//     showMode('date');
-//   };
-
-//   const showTimepicker = () => {
-//     showMode('time');
-//   };
-
-//   return (
-//     <View>
-//       <View>
-//         <Button onPress={showDatepicker} title="Show date picker!" />
-//       </View>
-//       <View>
-//         <Button onPress={showTimepicker} title="Show time picker!" />
-//       </View>
-//       {show && (
-//         <DateTimePicker
-//           testID="dateTimePicker"
-//           value={date}
-//           mode={mode}
-//           is24Hour={true}
-//           display="default"
-//           onChange={onChange}
-//         />
-//       )}
-//     </View>
-//   );
-// };
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		margin: 20,
+	},
+	headerContainer: {
+		alignItems: 'center',
+		margin: 20,
+	},
+	headerTitleContainer: {
+		alignItems: 'center',
+		marginTop: 10,
+		marginBottom: 0,
+	},
+	headerTitle: {
+		fontSize: 16,
+	},
+	edit: {
+		margin: 0,
+		color: 'orange',
+		fontSize: 12,
+	},
+	midContainer: {},
+	divider: {
+		margin: 20,
+		alignItems: 'center',
+		zIndex: 99999,
+	},
+});
