@@ -15,16 +15,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const JobsList = ({ jobs, navigation }) => {
 	const dispatch = useDispatch();
 	const userId = useSelector((state) => state.users.user.id);
+	const filteredJobs = useSelector((state) => state.jobs.filteredJobs);
 
-	console.log(navigation);
-
-	const handleDelete = (e, jobId) => {
-		e.preventDefault();
+	const handleDelete = (jobId) => {
 		dispatch(deleteJob(jobId));
 	};
 
-	const handleUpdate = (e, jobDetails) => {
-		e.preventDefault();
+	const handleUpdate = (jobDetails) => {
 		navigation.navigate('New Job');
 		dispatch(getJob(jobDetails));
 	};
@@ -66,7 +63,7 @@ const JobsList = ({ jobs, navigation }) => {
 					<View style={styles.buttonContainer}>
 						<TouchableOpacity
 							style={styles.button}
-							onPress={(e) => handleUpdate(e, item)}>
+							onPress={() => handleUpdate(item)}>
 							<MaterialCommunityIcons
 								name="square-edit-outline"
 								size={20}
@@ -77,7 +74,7 @@ const JobsList = ({ jobs, navigation }) => {
 
 						<TouchableOpacity
 							style={styles.button}
-							onPress={(e) => handleDelete(e, item.id)}>
+							onPress={() => handleDelete(item.id)}>
 							<MaterialCommunityIcons
 								name="delete-forever-outline"
 								size={22}

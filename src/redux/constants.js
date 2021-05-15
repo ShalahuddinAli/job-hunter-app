@@ -21,3 +21,5 @@ export const GET_JOB_DETAILS = 'GET_JOB_DETAILS';
 export const JOB_UPDATE = 'JOB_UPDATE';
 
 export const CLEAR_JOB = 'CLEAR_JOB';
+
+export const FILTERED_JOBS = 'FILTERED_JOBS';

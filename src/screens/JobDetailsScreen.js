@@ -1,29 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card, Button } from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
+import { clearJob } from '../redux/actions';
+import { HeaderBackButton } from '@react-navigation/stack';
 
-const JobDetailsScreen = () => {
+const JobDetailsScreen = ({ navigation }) => {
 	const job = useSelector((state) => state.jobs.job);
+	const dispatch = useDispatch();
 	console.log(job);
 
 	const datePosted = (unix) => {
-		return moment.unix(unix.seconds).format('d-MMM-YY');
+		console.log('hit me');
+		return moment.unix(unix?.seconds).format('D-MMM-YY');
 	};
+
+	useEffect(() => {
+		navigation.setOptions({
+			headerLeft: () => (
+				<HeaderBackButton
+					onPress={() => {
+						navigation.goBack();
+						// to be rectify,
+						dispatch(clearJob());
+					}}
+				/>
+			),
+		});
+	}, [navigation]);
+
 	return (
 		<View>
-			<Card>
+			<Card style={styles.card}>
 				<Card.Title>{job.jobTitle}</Card.Title>
 				<Card.Divider />
-				<View style={styles.user}>
-					<Text style={styles.name}>${job.pay}</Text>
-				</View>
-				<View>
+				<View style={styles.desc}>
 					<Text>{job.descriptions}</Text>
 				</View>
-				<View style={styles.user}>
-					<Text style={styles.name}>Posted on {datePosted(job.createdOn)}</Text>
+				<View style={styles.pay}>
+					<Text>${job.pay}</Text>
+				</View>
+				<View style={styles.postedOn}>
+					<Text>Posted on {datePosted(job.createdOn)}</Text>
 				</View>
 				<Button
 					buttonStyle={{
@@ -42,4 +61,16 @@ const JobDetailsScreen = () => {
 
 export default JobDetailsScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	card: {},
+	desc: {
+		margin: 10,
+	},
+	pay: {
+		margin: 10,
+	},
+	postedOn: {
+		marginTop: 20,
+		marginLeft: 10,
+	},
+});

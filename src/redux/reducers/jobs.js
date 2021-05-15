@@ -1,8 +1,15 @@
-import { CLEAR_JOB, CLEAR_JOBS, GET_JOBS, GET_JOB_DETAILS } from '../constants';
+import {
+	CLEAR_JOB,
+	CLEAR_JOBS,
+	GET_JOBS,
+	GET_JOB_DETAILS,
+	FILTERED_JOBS,
+} from '../constants';
 
 const initialState = {
 	jobs: [],
 	job: '',
+	filteredJobs: [],
 };
 
 const jobs = (state = initialState, action) => {
@@ -15,7 +22,7 @@ const jobs = (state = initialState, action) => {
 				jobs: payload,
 			};
 		case CLEAR_JOBS:
-			return { jobs: [], job: '' };
+			return { jobs: [], job: '', searchedJobs: [] };
 		case GET_JOB_DETAILS:
 			return {
 				...state,
@@ -24,7 +31,12 @@ const jobs = (state = initialState, action) => {
 		case CLEAR_JOB:
 			return {
 				...state,
-				job: '',
+				job: payload,
+			};
+		case FILTERED_JOBS:
+			return {
+				...state,
+				filteredJobs: payload,
 			};
 		default:
 			return state;

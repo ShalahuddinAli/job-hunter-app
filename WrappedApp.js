@@ -11,6 +11,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import JobDetailsScreen from './src/screens/JobDetailsScreen';
+import { HeaderBackButton } from '@react-navigation/stack';
 
 if (!global.btoa) {
 	global.btoa = encode;
@@ -53,10 +54,10 @@ const WrappedApp = () => {
 									fontWeight: 'bold',
 									color: '#070414',
 								},
-								headerTintColor: {
-									fontWeight: 'bold',
-									color: '#070414',
-								},
+								// headerTintColor: {
+								// 	fontWeight: 'bold',
+								// 	color: '#070414',
+								// },
 							}}
 						/>
 						<Stack.Screen
@@ -70,10 +71,10 @@ const WrappedApp = () => {
 									fontWeight: 'bold',
 									color: '#070414',
 								},
-								headerTintColor: {
-									fontWeight: 'bold',
-									color: '#070414',
-								},
+								// headerTintColor: {
+								// 	fontWeight: 'bold',
+								// 	color: '#070414',
+								// },
 							}}
 						/>
 						<Stack.Screen
@@ -87,10 +88,10 @@ const WrappedApp = () => {
 									fontWeight: 'bold',
 									color: '#070414',
 								},
-								headerTintColor: {
-									fontWeight: 'bold',
-									color: '#070414',
-								},
+								// headerTintColor: {
+								// 	fontWeight: 'bold',
+								// 	color: '#070414',
+								// },
 							}}
 						/>
 					</>
@@ -120,10 +121,10 @@ const WrappedApp = () => {
 									fontWeight: 'bold',
 									color: '#070414',
 								},
-								headerTintColor: {
-									fontWeight: 'bold',
-									color: '#070414',
-								},
+								// headerTintColor: {
+								// 	fontWeight: 'bold',
+								// 	color: '#070414',
+								// },
 							}}
 						/>
 					</>

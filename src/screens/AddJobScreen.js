@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Text,
 	TextInput,
@@ -8,9 +8,8 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch } from 'react-redux';
-import { addJob, updateJob } from '../redux/actions/index';
+import { addJob, clearJob, updateJob } from '../redux/actions/index';
 import { useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
 
 const AddJobScreen = ({ navigation }) => {
 	const job = useSelector((state) => state.jobs.job);
@@ -21,6 +20,14 @@ const AddJobScreen = ({ navigation }) => {
 		pay: job.id ? job.pay : '',
 	});
 	const { jobTitle, descriptions, pay } = newJobData;
+
+	//for inbuilt back button at the top
+	useEffect(() => {
+		navigation.addListener('beforeRemove', (e) => {
+			navigation.dispatch(e.data.action);
+			dispatch(clearJob());
+		});
+	}, [navigation]);
 
 	const handleSubmit = (e) => {
 		// check for empty fileds

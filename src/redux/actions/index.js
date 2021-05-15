@@ -12,6 +12,7 @@ import {
 	GET_JOB_DETAILS,
 	JOB_UPDATE,
 	CLEAR_JOB,
+	FILTERED_JOBS,
 } from '../constants';
 
 export const userCurrentState = () => {
@@ -106,8 +107,9 @@ export const signIn = (email, password) => {
 
 export const signOut = () => {
 	return (dispatch) => {
-		firebase.auth().signOut();
+		dispatch(clearJobs());
 		dispatch({ type: SIGN_OUT });
+		firebase.auth().signOut();
 	};
 };
 
@@ -124,6 +126,7 @@ export const userJobPosts = () => {
 			.collection('posts')
 			.doc(firebase.auth().currentUser.uid)
 			.collection('userPosts')
+			.orderBy('createdOn', 'desc')
 			.get()
 			.then((querySnapshot) => {
 				const posts = querySnapshot.docs.map((doc) => doc.data());
@@ -142,10 +145,11 @@ export const getJobs = () => {
 		firebase
 			.firestore()
 			.collectionGroup('userPosts')
-			// .where('createdBy', '==', user)
-			.orderBy('createdOn', 'desc')
+			.where('createdBy', '!=', user)
+			// .orderBy('createdOn', 'desc')
 			.get()
 			.then((querySnapshot) => {
+				console.log(querySnapshot);
 				const posts = querySnapshot.docs.map((doc) => doc.data());
 				dispatch({ type: GET_JOBS, payload: posts });
 			})
@@ -235,6 +239,7 @@ export const updateJob = (id, jobTitle, descriptions, pay, navigation) => {
 			.then((snapshot) => {
 				dispatch(userJobPosts());
 				dispatch(getJobs());
+				navigation.navigate('Home');
 			})
 			.catch((error) => {
 				alert(error);
@@ -244,6 +249,12 @@ export const updateJob = (id, jobTitle, descriptions, pay, navigation) => {
 
 export const clearJob = () => {
 	return (dispatch) => {
-		dispatch({ type: CLEAR_JOB });
+		dispatch({ type: CLEAR_JOB, payload: '' });
+	};
+};
+
+export const filteredJobs = (text) => {
+	return (dispatch) => {
+		dispatch({ type: FILTERED_JOBS, payload: text });
 	};
 };
