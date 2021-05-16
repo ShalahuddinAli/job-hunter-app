@@ -139,11 +139,9 @@ export const userJobPosts = () => {
 
 export const getJobs = () => {
 	return (dispatch) => {
-		const user = firebase.auth().currentUser.uid;
+		const dbCollection = firebase.firestore().collection('posts');
 
-		firebase
-			.firestore()
-			.collection('posts')
+		dbCollection
 			.orderBy('createdOn', 'desc')
 			.get()
 			.then((querySnapshot) => {

@@ -15,7 +15,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const JobsList = ({ jobs, navigation }) => {
 	const dispatch = useDispatch();
 	const userId = useSelector((state) => state.users.user.id);
-	const filteredJobs = useSelector((state) => state.jobs.filteredJobs);
 
 	const handleDelete = (jobId) => {
 		dispatch(deleteJob(jobId));
