@@ -10,7 +10,6 @@ import AddImageScreen from './AddImageScreen';
 const ProfileScreen = ({ navigation }) => {
 	const user = useSelector((state) => state.users);
 	const dispatch = useDispatch();
-	console.log(user);
 
 	const handleOut = (e) => {
 		e.preventDefault();
