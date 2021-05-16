@@ -5,15 +5,24 @@ import 'firebase/database';
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/storage';
+import {
+	API_KEY,
+	AUTH_DOMAIN,
+	PROJECT_ID,
+	STORAGE_BUCKET,
+	MESSAGING_SENDER_ID,
+	APP_ID,
+	MEASUREMENT_ID,
+} from '@env';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyAWao61sAAo4QXoiiaSTOvotqoVPbcmmd0',
-	authDomain: 'project4-job.firebaseapp.com',
-	projectId: 'project4-job',
-	storageBucket: 'project4-job.appspot.com',
-	messagingSenderId: '566142696267',
-	appId: '1:566142696267:web:1e4f078cc0916ec5d8c6ce',
-	measurementId: 'G-6106EP4F8X',
+	apiKey: API_KEY,
+	authDomain: AUTH_DOMAIN,
+	projectId: PROJECT_ID,
+	storageBucket: STORAGE_BUCKET,
+	messagingSenderId: MESSAGING_SENDER_ID,
+	appId: APP_ID,
+	measurementId: MEASUREMENT_ID,
 };
 
 if (!firebase.apps.length) {

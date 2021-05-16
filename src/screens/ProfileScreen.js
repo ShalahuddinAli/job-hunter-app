@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from '../redux/actions/index';
 import UserJobs from '../components/UserJobs';
 import { AntDesign } from 'react-native-vector-icons';
+import AddImageScreen from './AddImageScreen';
 
 const ProfileScreen = ({ navigation }) => {
 	const user = useSelector((state) => state.users);
@@ -57,6 +58,13 @@ const ProfileScreen = ({ navigation }) => {
 					iconRight
 					title="Log Out    "
 					onPress={(e) => handleOut(e)}
+				/>
+				<Button
+					style={styles.button}
+					icon={<AntDesign name="logout" size={20} color="#f3f2f0" />}
+					iconRight
+					title="cam    "
+					onPress={() => navigation.navigate('Add')}
 				/>
 			</View>
 		</View>

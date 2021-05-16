@@ -11,6 +11,8 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import JobDetailsScreen from './src/screens/JobDetailsScreen';
+import AddImageScreen from './src/screens/AddImageScreen';
+
 import { HeaderBackButton } from '@react-navigation/stack';
 
 if (!global.btoa) {
@@ -94,6 +96,7 @@ const WrappedApp = () => {
 								// },
 							}}
 						/>
+						<Stack.Screen name="Add" component={AddImageScreen} />
 					</>
 				) : (
 					<>
