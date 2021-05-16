@@ -25,6 +25,7 @@ const WrappedApp = () => {
 	const Stack = createStackNavigator();
 	const dispatch = useDispatch();
 	const userStatus = useSelector((state) => state.users);
+	const job = useSelector((state) => state.jobs.job);
 	const { loading, user } = userStatus;
 
 	useEffect(() => {
@@ -56,6 +57,7 @@ const WrappedApp = () => {
 									fontWeight: 'bold',
 									color: '#070414',
 								},
+								title: job ? 'Update Job' : 'New Job',
 								// headerTintColor: {
 								// 	fontWeight: 'bold',
 								// 	color: '#070414',

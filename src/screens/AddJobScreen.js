@@ -15,6 +15,7 @@ const AddJobScreen = ({ navigation }) => {
 	const job = useSelector((state) => state.jobs.job);
 	const dispatch = useDispatch();
 	const [newJobData, setNewJobData] = useState({
+		//to check whether its updating or create job
 		jobTitle: job.id ? job.jobTitle : '',
 		descriptions: job.id ? job.descriptions : '',
 		pay: job.id ? job.pay : '',
