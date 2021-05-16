@@ -98,7 +98,11 @@ const WrappedApp = () => {
 								// },
 							}}
 						/>
-						<Stack.Screen name="Add" component={AddImageScreen} />
+						<Stack.Screen
+							name="Add"
+							component={AddImageScreen}
+							options={{ headerShown: false }}
+						/>
 					</>
 				) : (
 					<>
