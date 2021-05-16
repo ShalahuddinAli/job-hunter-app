@@ -9,10 +9,8 @@ import { HeaderBackButton } from '@react-navigation/stack';
 const JobDetailsScreen = ({ navigation }) => {
 	const job = useSelector((state) => state.jobs.job);
 	const dispatch = useDispatch();
-	console.log(job);
 
 	const datePosted = (unix) => {
-		console.log('hit me');
 		return moment.unix(unix?.seconds).format('D-MMM-YY');
 	};
 
@@ -22,7 +20,6 @@ const JobDetailsScreen = ({ navigation }) => {
 				<HeaderBackButton
 					onPress={() => {
 						navigation.goBack();
-						// to be rectify,
 						dispatch(clearJob());
 					}}
 				/>

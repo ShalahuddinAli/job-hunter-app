@@ -8,9 +8,13 @@ const Search = () => {
 
 	const dispatch = useDispatch();
 	const allJobs = useSelector((state) => state.jobs.jobs);
-	console.log(allJobs);
+	const userId = useSelector((state) => state.users.user.id);
 
 	useEffect(() => {
+		const nonUserJobs = allJobs.filter((job) => {
+			return job.createdBy !== userId;
+		});
+
 		// Check if searched text is not blank
 		if (search) {
 			// Inserted text is not blank
@@ -26,7 +30,7 @@ const Search = () => {
 			setSearch(search);
 		} else {
 			// Inserted text is blank
-			dispatch(filteredJobs(allJobs));
+			dispatch(filteredJobs(nonUserJobs));
 			setSearch(search);
 		}
 	}, [allJobs, search]);

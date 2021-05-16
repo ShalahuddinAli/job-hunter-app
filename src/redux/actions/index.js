@@ -10,7 +10,6 @@ import {
 	SIGN_OUT,
 	CLEAR_JOBS,
 	GET_JOB_DETAILS,
-	JOB_UPDATE,
 	CLEAR_JOB,
 	FILTERED_JOBS,
 } from '../constants';
@@ -120,12 +119,12 @@ export const clearJobs = () => {
 };
 
 export const userJobPosts = () => {
+	const user = firebase.auth().currentUser.uid;
 	return (dispatch) => {
 		firebase
 			.firestore()
 			.collection('posts')
-			.doc(firebase.auth().currentUser.uid)
-			.collection('userPosts')
+			.where('createdBy', '==', user)
 			.orderBy('createdOn', 'desc')
 			.get()
 			.then((querySnapshot) => {
@@ -144,12 +143,10 @@ export const getJobs = () => {
 
 		firebase
 			.firestore()
-			.collectionGroup('userPosts')
-			.where('createdBy', '!=', user)
-			// .orderBy('createdOn', 'desc')
+			.collection('posts')
+			.orderBy('createdOn', 'desc')
 			.get()
 			.then((querySnapshot) => {
-				console.log(querySnapshot);
 				const posts = querySnapshot.docs.map((doc) => doc.data());
 				dispatch({ type: GET_JOBS, payload: posts });
 			})
@@ -161,11 +158,7 @@ export const getJobs = () => {
 
 export const addJob = (jobTitle, descriptions, pay, navigation) => {
 	return (dispatch) => {
-		const dbCollection = firebase
-			.firestore()
-			.collection('posts')
-			.doc(firebase.auth().currentUser.uid)
-			.collection('userPosts');
+		const dbCollection = firebase.firestore().collection('posts');
 
 		dbCollection
 			.doc()
@@ -196,11 +189,7 @@ export const addJob = (jobTitle, descriptions, pay, navigation) => {
 
 export const deleteJob = (jobId) => {
 	return (dispatch) => {
-		const dbCollection = firebase
-			.firestore()
-			.collection('posts')
-			.doc(firebase.auth().currentUser.uid)
-			.collection('userPosts');
+		const dbCollection = firebase.firestore().collection('posts');
 
 		dbCollection
 			.doc(jobId)
@@ -221,16 +210,12 @@ export const getJob = (jobDetails) => {
 	};
 };
 
-export const updateJob = (id, jobTitle, descriptions, pay, navigation) => {
+export const updateJob = (jobId, jobTitle, descriptions, pay, navigation) => {
 	return (dispatch) => {
-		const dbCollection = firebase
-			.firestore()
-			.collection('posts')
-			.doc(firebase.auth().currentUser.uid)
-			.collection('userPosts');
+		const dbCollection = firebase.firestore().collection('posts');
 
 		dbCollection
-			.doc(id)
+			.doc(jobId)
 			.update({
 				jobTitle,
 				descriptions,
